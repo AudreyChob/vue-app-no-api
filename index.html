@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="">
     
+    <!-- Feuille de style -->
     <style>
         [v-cloak] {
             display: none;
@@ -23,6 +24,7 @@
 
 <h1>Ordonnance Médicale  </h1>
 
+<!-- formulaire -->
 <fieldset id="main" v-cloak>
     <legend>Perfusion</legend>
      
@@ -51,8 +53,9 @@
         <input type="text" v-model="nbHeure" id="nbHeure" min="0" max="70"> heure(s) soit {{conversion()}} min
     </p>
     <fieldset>
+        <!-- Affichage des infos entrées dans le formulaire -->
         <legend> Résumé </legend>
-        <p id="nom">Nom du patient: {{ sexe }} {{ nom }} </p>
+        <p>Nom du patient: {{ sexe }} {{ nom }} </p>
         <p>Date de perfusion:  {{ debut }} </p> 
         <p>Débit en ml/h: {{ calculMlh() }}</p>
         <p>Débit en gouttes/min: {{ calculGttMin() }}</p>
@@ -60,11 +63,8 @@
 </fieldset>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.0.5/vue.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment-with-locales.min.js"></script>
 
 <script>
-//https://momentjs.com/
-moment().format();
 
 
 var RH = new Vue ({
@@ -78,23 +78,19 @@ var RH = new Vue ({
     },
 
     methods: {
+        //calcul débit en ml / heure
         calculMlh: function() {
             return Math.ceil(this.quantite/this.nbHeure) + " ml/h";
         },
+        // conversion des heures en minutes
         conversion: function() {
             return Math.ceil( this.nbHeure*60);
         },
+        //calcul débit en gouttes / min (qte * 30 gouttes / temps en minutes)
         calculGttMin: function() {
             return Math.ceil((this.quantite * 30) / (this.nbHeure*60)) + " gtt/min"  ;
         },
-        alerteTemps: function(){
-            if(nbHeure < 0.25){
-                alert("Temps trop cours");
-            }
-            if (nbHeure > 12){
-                alert("temps trop long");
-            }
-        }
+
     }
 })
 </script>
