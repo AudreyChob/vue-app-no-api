@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Calcul de débit de perfusion</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="">
+    
+    <style>
+        [v-cloak] {
+            display: none;
+        }
+
+        body {
+            background-color: rgb(168, 235, 201);
+        }
+
+    </style>
+</head>
+
+<body>
+
+<h1>Ordonnance Médicale  </h1>
+
+<fieldset id="main" v-cloak>
+    <legend>Perfusion</legend>
+     
+    <p>
+        Sexe: 
+        <select v-model="sexe">
+            <option value="Mr"> Homme </option>
+            <option value="Mme" > Femme </option>
+        </select>
+    </p>
+    <p>
+        Nom: <br>
+        <input type="text" v-model="nom">
+    </p>
+    <p>
+        Date de la perfusion: <br>
+        <input type="date" v-model="debut">
+    </p>
+    <p>
+        Quantité en ml: <br>
+        <input type="text" v-model="quantite">
+    </p>
+   
+    <p>
+        Temps prévu:<br>
+        <input type="text" v-model="nbHeure" id="nbHeure" min="0" max="70"> heure(s) soit {{conversion()}} min
+    </p>
+    <fieldset>
+        <legend> Résumé </legend>
+        <p id="nom">Nom du patient: {{ sexe }} {{ nom }} </p>
+        <p>Date de perfusion:  {{ debut }} </p> 
+        <p>Débit en ml/h: {{ calculMlh() }}</p>
+        <p>Débit en gouttes/min: {{ calculGttMin() }}</p>
+    </fieldset>
+</fieldset>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.0.5/vue.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment-with-locales.min.js"></script>
+
+<script>
+//https://momentjs.com/
+moment().format();
+
+
+var RH = new Vue ({
+    el: "#main",
+    data: {
+        nom: "",
+        sexe: "",
+        nbHeure: "",
+        debut: "",
+        quantite: "",
+    },
+
+    methods: {
+        calculMlh: function() {
+            return Math.ceil(this.quantite/this.nbHeure) + " ml/h";
+        },
+        conversion: function() {
+            return Math.ceil( this.nbHeure*60);
+        },
+        calculGttMin: function() {
+            return Math.ceil((this.quantite * 30) / (this.nbHeure*60)) + " gtt/min"  ;
+        },
+        alerteTemps: function(){
+            if(nbHeure < 0.25){
+                alert("Temps trop cours");
+            }
+            if (nbHeure > 12){
+                alert("temps trop long");
+            }
+        }
+    }
+})
+</script>
+</body>
+</html>
