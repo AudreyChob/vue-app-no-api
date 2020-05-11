@@ -17,7 +17,7 @@
         }
         #main {
             margin: 5%;
-            align-content: center;
+            display: flex;
         }
         h1{
             text-align: center;
@@ -26,9 +26,21 @@
             background-color: rgb(83, 189, 238,0.7);
             
         }
-
-
-
+        @media screen and (min-width: 1100px) {
+            #ordo{
+                margin-left: 10%;
+                width: 40%;
+                margin-top: 5%;
+            }
+            #resume{
+                position: absolute;
+                float: right;
+                margin-left: 120%;
+                width: 342px;
+                text-align: left;
+                
+            }
+        }   
     </style>
 </head>
 
@@ -70,7 +82,8 @@
                     </label>
                 </form>
             </div> 
-            <div class="card text-center"id="resume">
+            <div class="card text-center" id="resume">
+            <div class="card text-center">
                 <h3 class="card-header"> Résumé </h3>
             </div>
             <div class="card-body">
@@ -80,6 +93,7 @@
                     <p class="card-text">Débit en ml/h: {{ calculMlh() }}</p>
                     <p class="card-text">Débit en gouttes/min: {{ calculGttMin() }}</p>
             </div>
+        </div>
     </div>
 
 
