@@ -5,8 +5,7 @@
     <title>Calcul de débit de perfusion</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="">
-    
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
     <!-- Feuille de style -->
     <style>
         [v-cloak] {
@@ -14,85 +13,106 @@
         }
 
         body {
-            background-color: rgb(168, 235, 201);
+            background-color: rgb(83, 189, 238,0.7);
         }
+        #main {
+            margin: 5%;
+            align-content: center;
+        }
+        h1{
+            text-align: center;
+        }
+        .card-body {
+            background-color: rgb(83, 189, 238,0.7);
+            
+        }
+
+
 
     </style>
 </head>
 
 <body>
 
-<h1>Ordonnance Médicale  </h1>
+    <h1>Ordonnance Médicale  </h1>
 
-<!-- formulaire -->
-<fieldset id="main" v-cloak>
-    <legend>Perfusion</legend>
-     
-    <p>
-        Sexe: 
-        <select v-model="sexe">
-            <option value="Mr"> Homme </option>
-            <option value="Mme" > Femme </option>
-        </select>
-    </p>
-    <p>
-        Nom: <br>
-        <input type="text" v-model="nom">
-    </p>
-    <p>
-        Date de la perfusion: <br>
-        <input type="date" v-model="debut">
-    </p>
-    <p>
-        Quantité en ml: <br>
-        <input type="text" v-model="quantite">
-    </p>
-   
-    <p>
-        Temps prévu:<br>
-        <input type="text" v-model="nbHeure" id="nbHeure" min="0" max="70"> heure(s) soit {{conversion()}} min
-    </p>
-    <fieldset>
-        <!-- Affichage des infos entrées dans le formulaire -->
-        <legend> Résumé </legend>
-        <p>Nom du patient: {{ sexe }} {{ nom }} </p>
-        <p>Date de perfusion:  {{ debut }} </p> 
-        <p>Débit en ml/h: {{ calculMlh() }}</p>
-        <p>Débit en gouttes/min: {{ calculGttMin() }}</p>
-    </fieldset>
-</fieldset>
+    <div class="container-flex" id="main"  v-cloak>
+        <div class="card text-center"id="ordo">
+            <div class="card-header">
+                <h2>Perfusion</h2>
+            </div>            
+            <div class="card-body">
+                <form>
+                    <label>
+                        Sexe: 
+                        <select v-model="sexe">
+                            <option value="Mr"> Homme </option>
+                            <option value="Mme" > Femme </option>
+                        </select>  
+                    </label>
+                    <label>
+                        Nom: 
+                        <input type="text" v-model="nom" size="20">
+                    </label>
+                    <label>
+                        Date de la perfusion: 
+                        <input type="date" v-model="debut">
+                    </label>
+                    <label>
+                        Quantité en ml: 
+                        <input type="text" v-model="quantite"  size="5" class="form">
+                    </label>
+                
+                    <label>
+                        Temps prévu:
+                        <input type="text" v-model="nbHeure" size="5" class="form"> 
+                        heure(s) soit {{conversion()}} min
+                    </label>
+                </form>
+            </div> 
+            <div class="card text-center"id="resume">
+                <h3 class="card-header"> Résumé </h3>
+            </div>
+            <div class="card-body">
+                    <!-- Affichage des infos entrées dans le formulaire -->
+                    <p class="card-text">Nom du patient: {{ sexe }} {{ nom }} </p>
+                    <p class="card-text">Date de perfusion:  {{ debut }} </p> 
+                    <p class="card-text">Débit en ml/h: {{ calculMlh() }}</p>
+                    <p class="card-text">Débit en gouttes/min: {{ calculGttMin() }}</p>
+            </div>
+    </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.0.5/vue.min.js"></script>
 
-<script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.0.5/vue.min.js"></script>
+
+    <script>
 
 
-var RH = new Vue ({
-    el: "#main",
-    data: {
-        nom: "",
-        sexe: "",
-        nbHeure: "",
-        debut: "",
-        quantite: "",
-    },
-
-    methods: {
-        //calcul débit en ml / heure
-        calculMlh: function() {
-            return Math.ceil(this.quantite/this.nbHeure) + " ml/h";
-        },
-        // conversion des heures en minutes
-        conversion: function() {
-            return Math.ceil( this.nbHeure*60);
-        },
-        //calcul débit en gouttes / min (qte * 30 gouttes / temps en minutes)
-        calculGttMin: function() {
-            return Math.ceil((this.quantite * 30) / (this.nbHeure*60)) + " gtt/min"  ;
+    var RH = new Vue ({
+        el: "#main",
+        data: {
+            nom: "",
+            sexe: "",
+            nbHeure: "",
+            debut: "",
+            quantite: "",
         },
 
-    }
-})
-</script>
+        methods: {
+            //calcul débit en ml / heure
+            calculMlh: function() {
+                return Math.ceil(this.quantite/this.nbHeure) + " ml/h";
+            },
+            // conversion des heures en minutes
+            conversion: function() {
+                return Math.ceil( this.nbHeure*60);
+            },
+            //calcul débit en gouttes / min (qte * 30 gouttes / temps en minutes)
+            calculGttMin: function() {
+                return Math.ceil((this.quantite * 30) / (this.nbHeure*60)) + " gtt/min";
+            },
+        }
+    })
+    </script>
 </body>
 </html>
